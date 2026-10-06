@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Social</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <h1>Dark Social</h1>
+            <p>Eclipse Hybrid Network</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('chat')">Realtime Chat</button>
+            <button class="tab-btn" onclick="switchTab('downloader')">Video Downloader</button>
+        </nav>
+
+        <!-- Chat Section -->
+        <section id="chat-section" class="tab-content active">
+            <div id="chat-messages" class="chat-box"></div>
+            <div class="chat-input-area">
+                <input type="text" id="msg-input" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </section>
+
+        <!-- Downloader Section -->
+        <section id="downloader-section" class="tab-content">
+            <div class="downloader-box">
+                <input type="text" id="url-input" placeholder="Paste FB, TikTok, or YT URL...">
+                <button onclick="downloadVideo()">Get Video</button>
+                <div id="download-result"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
