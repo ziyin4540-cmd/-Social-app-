@@ -15,7 +15,6 @@ dependencies:
   audio_session: ^0.1.21
   image_picker: ^1.1.2
   image_cropper: ^8.0.2
-  flutter_local_notifications: ^17.0.0
   http: ^1.2.0
 
 dev_dependencies:
