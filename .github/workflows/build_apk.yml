@@ -28,11 +28,18 @@ jobs:
           rm -rf android
           flutter create . --platforms=android --org=com.dark.social
 
-      - name: Upgrade Android SDK & Build Configs
+      - name: Upgrade Android SDK Configurations
         run: |
-          sed -i 's/compileSdkVersion.*/compileSdkVersion 34/' android/app/build.gradle
-          sed -i 's/targetSdkVersion.*/targetSdkVersion 34/' android/app/build.gradle
-          sed -i 's/minSdkVersion.*/minSdkVersion 21/' android/app/build.gradle
+          if [ -f android/app/build.gradle ]; then
+            sed -i 's/compileSdkVersion.*/compileSdkVersion 34/' android/app/build.gradle
+            sed -i 's/targetSdkVersion.*/targetSdkVersion 34/' android/app/build.gradle
+            sed -i 's/minSdkVersion.*/minSdkVersion 21/' android/app/build.gradle
+          fi
+          if [ -f android/app/build.gradle.kts ]; then
+            sed -i 's/compileSdk = .*/compileSdk = 34/' android/app/build.gradle.kts
+            sed -i 's/targetSdk = .*/targetSdk = 34/' android/app/build.gradle.kts
+            sed -i 's/minSdk = .*/minSdk = 21/' android/app/build.gradle.kts
+          fi
 
       - name: Install Project Dependencies
         run: flutter pub get
@@ -45,4 +52,4 @@ jobs:
         with:
           name: app-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
-          
+
