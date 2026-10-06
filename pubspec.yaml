@@ -1,5 +1,5 @@
 name: dark_social
-description: "Dark Social All-In-One Application"
+description: "Dark Social Flutter Application"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
 
   supabase_flutter: ^2.5.0
-  agora_rtc_engine: ^6.3.2
   permission_handler: ^11.3.0
   audio_session: ^0.1.21
   image_picker: ^1.1.2
@@ -26,4 +25,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  
+
