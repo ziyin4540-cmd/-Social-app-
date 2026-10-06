@@ -23,10 +23,16 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Re-create Android Platform Files (Auto-Fix V2 Embedding)
+      - name: Re-create Android Platform Files
         run: |
           rm -rf android
           flutter create . --platforms=android --org=com.dark.social
+
+      - name: Upgrade Android SDK & Build Configs
+        run: |
+          sed -i 's/compileSdkVersion.*/compileSdkVersion 34/' android/app/build.gradle
+          sed -i 's/targetSdkVersion.*/targetSdkVersion 34/' android/app/build.gradle
+          sed -i 's/minSdkVersion.*/minSdkVersion 21/' android/app/build.gradle
 
       - name: Install Project Dependencies
         run: flutter pub get
@@ -39,4 +45,4 @@ jobs:
         with:
           name: app-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
-
+          
