@@ -28,11 +28,21 @@ jobs:
           rm -rf android
           flutter create . --platforms=android --org=com.dark.social
 
+      - name: Force Upgrade Android SDK Version to 34
+        run: |
+          echo "android.compileSdkVersion=34" >> android/gradle.properties
+          echo "android.targetSdkVersion=34" >> android/gradle.properties
+          echo "android.minSdkVersion=21" >> android/gradle.properties
+          find android -name "build.gradle*" -exec sed -i 's/compileSdk = .*/compileSdk = 34/g' {} +
+          find android -name "build.gradle*" -exec sed -i 's/compileSdkVersion .*/compileSdkVersion 34/g' {} +
+          find android -name "build.gradle*" -exec sed -i 's/targetSdkVersion .*/targetSdkVersion 34/g' {} +
+          find android -name "build.gradle*" -exec sed -i 's/minSdkVersion .*/minSdkVersion 21/g' {} +
+
       - name: Install Project Dependencies
         run: flutter pub get
 
-      - name: Build Release APK with Fixed SDK
-        run: flutter build apk --release --android-skip-build-dependency-validation
+      - name: Build Release APK
+        run: flutter build apk --release
 
       - name: Upload APK to Artifacts
         uses: actions/upload-artifact@v4
