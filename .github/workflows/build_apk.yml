@@ -23,22 +23,10 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Re-create Android Platform Files
+      - name: Re-create Clean Android Platform Files
         run: |
           rm -rf android
           flutter create . --platforms=android --org=com.dark.social
-
-      - name: Enable Core Library Desugaring for Notifications
-        run: |
-          if [ -f android/app/build.gradle ]; then
-            sed -i '/defaultConfig {/a \    multiDexEnabled true' android/app/build.gradle
-            sed -i '/compileOptions {/a \    isCoreLibraryDesugaringEnabled true' android/app/build.gradle
-          fi
-          if [ -f android/app/build.gradle.kts ]; then
-            sed -i '/defaultConfig {/a \        multiDexEnabled = true' android/app/build.gradle.kts
-            sed -i '/compileOptions {/a \        isCoreLibraryDesugaringEnabled = true' android/app/build.gradle.kts
-          fi
-          echo "dependencies { coreLibraryDesugaring('com.android.tools:desugar_jdk_libs:2.0.4') }" >> android/app/build.gradle || true
 
       - name: Install Project Dependencies
         run: flutter pub get
