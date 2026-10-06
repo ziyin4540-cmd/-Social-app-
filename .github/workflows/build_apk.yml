@@ -23,20 +23,27 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Re-create Native Android Folder
+      - name: Re-create Android Platform Files
         run: |
           rm -rf android
           flutter create . --platforms=android --org=com.dark.social
+
+      - name: Force Fix Android Gradle Compile SDK
+        run: |
+          echo "android.compileSdkVersion=34" >> android/gradle.properties
+          echo "android.targetSdkVersion=34" >> android/gradle.properties
+          echo "android.minSdkVersion=21" >> android/gradle.properties
+          echo "android.experimental.privacy.repo=false" >> android/gradle.properties
 
       - name: Install Project Dependencies
         run: flutter pub get
 
       - name: Build Release APK
-        run: flutter build apk --release --android-project-args="android.compileSdkVersion=34,android.targetSdkVersion=34,android.minSdkVersion=21"
+        run: flutter build apk --release --no-tree-shake-icons
 
       - name: Upload APK to Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-          
+          path: build/app/outputs/flutter-apk/*.apk
+
