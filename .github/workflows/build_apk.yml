@@ -23,17 +23,17 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Re-create Android Platform Files
+      - name: Re-create Native Android Folder
         run: |
           rm -rf android
           flutter create . --platforms=android --org=com.dark.social
 
-      - name: Force Fix Android Gradle Compile SDK
+      - name: Force Direct SDK Update in Gradle
         run: |
-          echo "android.compileSdkVersion=34" >> android/gradle.properties
-          echo "android.targetSdkVersion=34" >> android/gradle.properties
-          echo "android.minSdkVersion=21" >> android/gradle.properties
-          echo "android.experimental.privacy.repo=false" >> android/gradle.properties
+          sed -i 's/compileSdk = .*/compileSdk = 34/g' android/app/build.gradle* || true
+          sed -i 's/compileSdkVersion .*/compileSdkVersion 34/g' android/app/build.gradle* || true
+          sed -i 's/targetSdkVersion .*/targetSdkVersion 34/g' android/app/build.gradle* || true
+          sed -i 's/minSdkVersion .*/minSdkVersion 21/g' android/app/build.gradle* || true
 
       - name: Install Project Dependencies
         run: flutter pub get
@@ -46,4 +46,4 @@ jobs:
         with:
           name: app-release-apk
           path: build/app/outputs/flutter-apk/*.apk
-
+          
