@@ -1,5 +1,5 @@
 name: dark_social
-description: "Dark Social Flutter Application"
+description: "Dark Social All-In-One Application"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -17,6 +17,7 @@ dependencies:
   image_picker: ^1.1.2
   image_cropper: ^8.0.2
   flutter_local_notifications: ^17.0.0
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +26,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  
