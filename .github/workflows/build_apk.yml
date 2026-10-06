@@ -23,20 +23,43 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Re-create Android Platform Files
+      - name: Re-create Android Project with SDK 34
         run: |
           rm -rf android
           flutter create . --platforms=android --org=com.dark.social
+          cat <<EOT > android/app/build.gradle.kts
+          plugins {
+              id("com.android.application")
+              id("kotlin-android")
+              id("dev.flutter.flutter-gradle-plugin")
+          }
 
-      - name: Force Upgrade Android SDK Version to 34
-        run: |
-          echo "android.compileSdkVersion=34" >> android/gradle.properties
-          echo "android.targetSdkVersion=34" >> android/gradle.properties
-          echo "android.minSdkVersion=21" >> android/gradle.properties
-          find android -name "build.gradle*" -exec sed -i 's/compileSdk = .*/compileSdk = 34/g' {} +
-          find android -name "build.gradle*" -exec sed -i 's/compileSdkVersion .*/compileSdkVersion 34/g' {} +
-          find android -name "build.gradle*" -exec sed -i 's/targetSdkVersion .*/targetSdkVersion 34/g' {} +
-          find android -name "build.gradle*" -exec sed -i 's/minSdkVersion .*/minSdkVersion 21/g' {} +
+          android {
+              namespace = "com.dark.social"
+              compileSdk = 34
+
+              defaultConfig {
+                  applicationId = "com.dark.social"
+                  minSdk = 21
+                  targetSdk = 34
+                  versionCode = 1
+                  versionName = "1.0.0"
+              }
+
+              compileOptions {
+                  sourceCompatibility = JavaVersion.VERSION_17
+                  targetCompatibility = JavaVersion.VERSION_17
+              }
+
+              kotlinOptions {
+                  jvmTarget = "17"
+              }
+          }
+
+          flutter {
+              source = "../.."
+          }
+          EOT
 
       - name: Install Project Dependencies
         run: flutter pub get
